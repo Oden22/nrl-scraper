@@ -22,7 +22,8 @@ def set_up_driver():
     options = Options()
     # Ignore annoying messages from the NRL website 
     options.add_argument('--ignore-certificate-errors')
-    
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     # Run Selenium in headless mode
     options.add_argument('--headless')
     options.add_argument('log-level=3')
