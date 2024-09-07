@@ -2,7 +2,6 @@
 Webscraper for finding NRL data related to player statistics
 """
 
-import ENVIRONMENT_VARIABLES as EV
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -12,13 +11,9 @@ import pandas as pd
 import numpy as np
 import chromedriver_autoinstaller
 from selenium.webdriver.chrome.options import Options
-from utilities.set_up_driver import set_up_driver
-
-import sys
+from scraping.set_up_driver import set_up_driver
 
 chromedriver_autoinstaller.install()
-
-sys.path.append('..')
 
 # List of variables for data extraction
 variables = ["Year", "Win", "Versus", "Round"]

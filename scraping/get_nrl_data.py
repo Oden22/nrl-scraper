@@ -1,6 +1,6 @@
 import concurrent.futures
 from bs4 import BeautifulSoup
-from .set_up_driver import set_up_driver
+from set_up_driver import set_up_driver
 
 # Helper function to fetch data for a specific round and year
 def fetch_round_data(round, year):

@@ -3,25 +3,21 @@
 # directory.
 
 # Imports
-from utilities.get_nrl_data import get_nrl_data
+from get_nrl_data import get_nrl_data
 import json
 
-# years = [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2022, 2023, 2024]
-years = [2024]
+years = [2022, 2023, 2024]
 rounds = range(1, 27)
 
 if __name__ == "__main__":
-    match_json_datas = []  # List to store JSON data for matches
-    match_json = get_nrl_data(rounds, years)
-   
-    # Create overall data dictionary
+    year_json = get_nrl_data(rounds, years)
     overall_data = {
-        "NRL": match_json_datas
+        "NRL": year_json
     }
+
     # Convert overall data to JSON format with indentation for better
     # readability
     overall_data_json = json.dumps(overall_data, indent=4)
 
-    # Write JSON data to a file
     with open("../data/nrl_data_all_years.json", "w") as file:
         file.write(overall_data_json)

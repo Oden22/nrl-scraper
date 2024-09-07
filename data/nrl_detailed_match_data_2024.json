@@ -1,0 +1,135 @@
+{
+    "NRL": [
+        {
+            "1": [
+                {
+                    "Sea Eagles v Rabbitohs": {
+                        "match": {
+                            "overall_first_try_scorer": "",
+                            "overall_first_try_minute": "Haumole",
+                            "overall_first_try_team": "sea-eagles",
+                            "ground": null,
+                            "weather": null
+                        },
+                        "home": {
+                            "team": "sea-eagles",
+                            "try_names": [
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                ""
+                            ],
+                            "try_minutes": [
+                                "Haumole",
+                                "Jason",
+                                "Lachlan",
+                                "Ben",
+                                "Reuben",
+                                "Luke"
+                            ],
+                            "first_try_scorer": "",
+                            "first_try_time": "Haumole",
+                            "time_in_possession": "26:17",
+                            "all_runs": "208",
+                            "all_run_metres": "1,870",
+                            "post_contact_metres": "485",
+                            "line_breaks": "7",
+                            "tackle_breaks": "31",
+                            "average_set_distance": "44.55",
+                            "kick_return_metres": "209",
+                            "offloads": "8",
+                            "receipts": "423",
+                            "total_passes": "237",
+                            "dummy_passes": "7",
+                            "kicks": "21",
+                            "kicking_metres": "555",
+                            "forced_drop_outs": "1",
+                            "bombs": "6",
+                            "grubbers": "6",
+                            "tackles_made": "330",
+                            "missed_tackles": "38",
+                            "intercepts": "3",
+                            "ineffective_tackles": "11",
+                            "errors": "14",
+                            "penalties_conceded": "1",
+                            "ruck_infringements": "2",
+                            "inside_10_metres": "1",
+                            "interchanges_used": "8",
+                            "Completion Rate": "78%",
+                            "Average_Play_Ball_Speed": "3.64s",
+                            "Kick_Defusal": "100%",
+                            "Effective_Tackle": "87.07%",
+                            "tries": "6",
+                            "conversions": "6/6",
+                            "penalty_goals": "12",
+                            "sin_bins": 0,
+                            "1_point_field_goals": 0,
+                            "2_point_field_goals": 0,
+                            "half_time": 0,
+                            "possesion": "51%"
+                        },
+                        "away": {
+                            "team": "rabbitohs",
+                            "try_names": [
+                                "",
+                                "",
+                                "",
+                                "",
+                                ""
+                            ],
+                            "try_minutes": [
+                                "Richard",
+                                "Jacob",
+                                "Latrell",
+                                "Alex",
+                                "Richard"
+                            ],
+                            "first_try_scorer": "",
+                            "first_try_time": "Richard",
+                            "time_in_possession": "25:45",
+                            "all_runs": "206",
+                            "all_run_metres": "1,645",
+                            "post_contact_metres": "483",
+                            "line_breaks": "5",
+                            "tackle_breaks": "38",
+                            "average_set_distance": "41.13",
+                            "kick_return_metres": "147",
+                            "offloads": "4",
+                            "receipts": "410",
+                            "total_passes": "218",
+                            "dummy_passes": "15",
+                            "kicks": "21",
+                            "kicking_metres": "769",
+                            "forced_drop_outs": "0",
+                            "bombs": "8",
+                            "grubbers": "0",
+                            "tackles_made": "308",
+                            "missed_tackles": "31",
+                            "intercepts": "0",
+                            "ineffective_tackles": "11",
+                            "errors": "11",
+                            "penalties_conceded": "5",
+                            "ruck_infringements": "1",
+                            "inside_10_metres": "0",
+                            "interchanges_used": "8",
+                            "Completion Rate": "80%",
+                            "Average_Play_Ball_Speed": "3.49s",
+                            "Kick_Defusal": "50%",
+                            "Effective_Tackle": "88%",
+                            "tries": "5",
+                            "conversions": "2/5",
+                            "penalty_goals": "10",
+                            "sin_bins": 0,
+                            "1_point_field_goals": 0,
+                            "2_point_field_goals": 0,
+                            "half_time": 0,
+                            "possesion": "49%"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

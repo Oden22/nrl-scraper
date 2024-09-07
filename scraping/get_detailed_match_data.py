@@ -2,76 +2,34 @@
 Web scraper for finding NRL data related to team statistics
 """
 from bs4 import BeautifulSoup
-from .set_up_driver import set_up_driver
+from set_up_driver import set_up_driver
 
 # Constants for stat categories
 BARS_DATA = {
-    'time_in_possession': -1, 'all_runs': -1, 'all_run_metres': -1,
-    'post_contact_metres': -1, 'line_breaks': -1, 'tackle_breaks': -1,
-    'average_set_distance': -1, 'kick_return_metres': -1, 'offloads': -1,
-    'receipts': -1, 'total_passes': -1, 'dummy_passes': -1, 'kicks': -1,
-    'kicking_metres': -1, 'forced_drop_outs': -1, 'bombs': -1, 'grubbers': -1,
-    'tackles_made': -1, 'missed_tackles': -1, 'intercepts': -1,
-    'ineffective_tackles': -1, 'errors': -1, 'penalties_conceded': -1,
-    'ruck_infringements': -1, 'inside_10_metres': -1, 'interchanges_used': -1
+    'time_in_possession': 0, 'all_runs': 0, 'all_run_metres': 0,
+    'post_contact_metres': 0, 'line_breaks': 0, 'tackle_breaks': 0,
+    'average_set_distance': 0, 'kick_return_metres': 0, 'offloads': 0,
+    'receipts': 0, 'total_passes': 0, 'dummy_passes': 0, 'kicks': 0,
+    'kicking_metres': 0, 'forced_drop_outs': 0, 'bombs': 0, 'grubbers': 0,
+    'tackles_made': 0, 'missed_tackles': 0, 'intercepts': 0,
+    'ineffective_tackles': 0, 'errors': 0, 'penalties_conceded': 0,
+    'ruck_infringements': 0, 'inside_10_metres': 0, 'interchanges_used': 0
 }
 
 DONUT_DATA = {
-    'Completion Rate': -1, 'Average_Play_Ball_Speed': -1, 'Kick_Defusal': -1,
-    'Effective_Tackle': -1
+    'Completion Rate': 0, 'Average_Play_Ball_Speed': 0, 'Kick_Defusal': 0,
+    'Effective_Tackle': 0
 }
 
 DONUT_DATA_2 = {
-    'tries': -1, 'conversions': -1, 'penalty_goals': -1, 'sin_bins': -1,
-    '1_point_field_goals': -1, '2_point_field_goals': -1, 'half_time': -1
+    'tries': 0, 'conversions': 0, 'penalty_goals': 0, 'sin_bins': 0,
+    '1_point_field_goals': 0, '2_point_field_goals': 0, 'half_time': 0
 }
 
 DONUT_DATA_2_WORDS = [
     'TRIES', 'CONVERSIONS', 'PENALTY GOALS', 'SIN BINS', '1 POINT FIELD GOALS',
     '2 POINT FIELD GOALS', 'HALF TIME'
 ]
-
-
-def get_detailed_nrl_data(round=1, year=2024, home_team="sea-eagles", away_team="rabbitohs"):
-    """Fetch detailed NRL match data between two teams for a specific round."""
-    home_team, away_team = [team.replace(" ", "-") for team in [home_team, away_team]]
-    url = f"https://www.nrl.com/draw/nrl-premiership/{year}/round-{round}/{home_team}-v-{away_team}/"
-    print(f"Scraping data for Round {round}: {url}")
-
-    # Web scrape the NRL site using Selenium
-    soup = get_page_source(url)
-
-    # Extract possession data
-    home_possession, away_possession = extract_possession_data(soup)
-
-    # Extract bar chart stats
-    home_bars, away_bars = extract_bar_chart_data(soup)
-
-    # Extract donut stats
-    home_donut, away_donut = extract_donut_data(soup)
-
-    # Extract try scorers data
-    home_try_data, away_try_data = extract_try_scorers(soup, home_team, away_team)
-
-    # Determine first try scorer data
-    overall_first_try_data = determine_first_try_scorer(home_try_data, away_try_data, home_team, away_team)
-
-    # Extract top-level match stats
-    home_game_stats, away_game_stats = extract_top_match_stats(soup)
-
-    # Extract referee data
-    ref_data = extract_referee_data(soup)
-
-    # Extract ground and weather conditions
-    match_conditions = extract_match_conditions(soup)
-
-    # Combine all the data
-    home_data = {**home_try_data, **home_bars, **home_donut, **home_game_stats}
-    away_data = {**away_try_data, **away_bars, **away_donut, **away_game_stats}
-    match_data = {**overall_first_try_data, **ref_data, **match_conditions}
-
-    return {'match': match_data, 'home': home_data, 'away': away_data}
-
 
 def get_page_source(url):
     """Get the page source for the given URL using Selenium."""
@@ -81,7 +39,6 @@ def get_page_source(url):
     driver.quit()
     return BeautifulSoup(page_source, "html.parser")
 
-
 def extract_possession_data(soup):
     """Extract possession data for home and away teams."""
     try:
@@ -90,8 +47,8 @@ def extract_possession_data(soup):
     except Exception as e:
         print(f"Error extracting possession data: {e}")
         home_possession, away_possession = None, None
-    return home_possession, away_possession
 
+    return home_possession, away_possession
 
 def extract_bar_chart_data(soup):
     """Extract bar chart statistics for both teams."""
@@ -143,7 +100,7 @@ def extract_team_try_data(soup, team):
         li_elements = soup.find(f"ul", class_=f"match-centre-summary-group__list--{team}").find_all("li")
         for li in li_elements:
             text = li.get_text(strip=True).split()
-            name, minute = ' '.join(text[:-1]), text[-1]
+            name, minute = ' '.join(text[:2]), text[2]
             try_data['try_names'].append(name)
             try_data['try_minutes'].append(minute)
 
@@ -214,3 +171,42 @@ def extract_match_conditions(soup):
         print(f"Error extracting match conditions: {e}")
     
     return match_conditions
+
+def get_detailed_nrl_data(round=1, year=2024, home_team="sea-eagles", away_team="rabbitohs"):
+    """Fetch detailed NRL match data between two teams for a specific round."""
+    home_team, away_team = [team.replace(" ", "-") for team in [home_team, away_team]]
+    url = f"https://www.nrl.com/draw/nrl-premiership/{year}/round-{round}/{home_team}-v-{away_team}/"
+
+    # Web scrape the NRL site using Selenium
+    soup = get_page_source(url)
+
+    # Extract possession data
+    home_possession, away_possession = extract_possession_data(soup)
+    # Extract bar chart stats
+    home_bars, away_bars = extract_bar_chart_data(soup)
+
+    # Extract donut stats
+    home_donut, away_donut = extract_donut_data(soup)
+
+    # Extract try scorers data
+    home_try_data, away_try_data = extract_try_scorers(soup, home_team, away_team)
+
+    # Determine first try scorer data
+    overall_first_try_data = determine_first_try_scorer(home_try_data, away_try_data, home_team, away_team)
+
+    # Extract top-level match stats
+    home_game_stats, away_game_stats = extract_top_match_stats(soup)
+
+    # Extract referee data
+    # ref_data = extract_referee_data(soup)
+
+    # Extract ground and weather conditions
+    # match_conditions = extract_match_conditions(soup)
+
+    # Combine all the data
+    home_data = {**home_try_data, **home_bars, **home_donut, **home_game_stats, **{'possesion': home_possession}}
+    away_data = {**away_try_data, **away_bars, **away_donut, **away_game_stats, **{'possesion': away_possession}}
+    match_data = {**overall_first_try_data}
+    
+    collected_data = {'match': match_data, 'home': home_data, 'away': away_data}
+    return collected_data
