@@ -172,7 +172,7 @@ def extract_match_conditions(soup):
     
     return match_conditions
 
-def get_detailed_nrl_data(round=1, year=2024, home_team="sea-eagles", away_team="rabbitohs"):
+def get_detailed_nrl_data(round=24, year=2024, home_team="wests-tigers", away_team="rabbitohs"):
     """Fetch detailed NRL match data between two teams for a specific round."""
     home_team, away_team = [team.replace(" ", "-") for team in [home_team, away_team]]
     url = f"https://www.nrl.com/draw/nrl-premiership/{year}/round-{round}/{home_team}-v-{away_team}/"
