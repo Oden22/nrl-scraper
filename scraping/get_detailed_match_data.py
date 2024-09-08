@@ -47,6 +47,7 @@ def extract_possession_data(soup):
     except Exception as e:
         print(f"Error extracting possession data: {e}")
         home_possession, away_possession = None, None
+        raise
 
     return home_possession, away_possession
 
@@ -65,7 +66,7 @@ def extract_bar_chart_data(soup):
             away_bars[bar_name] = item.get_text(strip=True)
     except Exception as e:
         print(f"Error extracting bar chart data: {e}")
-    
+        raise
     return home_bars, away_bars
 
 
@@ -80,7 +81,7 @@ def extract_donut_data(soup):
         away_donut.update({k: v for k, v in zip(away_donut, numbers[1::2])})
     except Exception as e:
         print(f"Error extracting donut data: {e}")
-    
+        raise
     return home_donut, away_donut
 
 
@@ -109,7 +110,7 @@ def extract_team_try_data(soup, team):
             try_data['first_try_time'] = try_data['try_minutes'][0]
     except Exception as e:
         print(f"Error extracting try scorers for {team}: {e}")
-    
+        raise
     return try_data
 
 
@@ -136,7 +137,7 @@ def extract_top_match_stats(soup):
             away_stats[key] = value
     except Exception as e:
         print(f"Error extracting match stats: {e}")
-    
+        raise
     return home_stats, away_stats
 
 
@@ -155,7 +156,7 @@ def extract_referee_data(soup):
             ref_data['main_ref'] = ref_data['ref_names'][0]
     except Exception as e:
         print(f"Error extracting referee data: {e}")
-    
+        raise
     return ref_data
 
 
@@ -169,7 +170,7 @@ def extract_match_conditions(soup):
         match_conditions['weather'] = details_elements[1].get_text(strip=True)
     except Exception as e:
         print(f"Error extracting match conditions: {e}")
-    
+        raise
     return match_conditions
 
 def get_detailed_nrl_data(round=24, year=2024, home_team="wests-tigers", away_team="rabbitohs"):

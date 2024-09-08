@@ -1,8 +1,5 @@
 import json
-import pandas as pd
-import numpy as np
 from get_detailed_match_data import get_detailed_nrl_data
-import ENVIRONMENT_VARIABLES as EV
 import concurrent.futures
 
 variables = [
@@ -16,19 +13,8 @@ variables = [
     "Round"
 ]
 
-select_round = 27
-
-years = ["2024"]
-
-# Initialize an empty dictionary to store data for each year
-match_data = {}
-
-# Create a DataFrame with columns representing combinations of team and
-# variable names
-df = pd.DataFrame(
-    columns=[
-        f"{team} {variable}" for team in EV.TEAMS for variable in variables])
-
+select_round = 28
+years = ["2022", "2023" ,"2024"]
 
 def get_basic_data():
     with open(f"../data/nrl_data_all_years.json", 'r') as file:
@@ -53,8 +39,6 @@ def get_game_data(game, round, year):
         }
     except Exception as ex:
         try:
-            # Try again 
-            print(f"{ex}")
             game_data = get_detailed_nrl_data(
                 round=round,
                 year=year,
@@ -64,8 +48,10 @@ def get_game_data(game, round, year):
             data = {
                 f"{h_team} v {a_team}": game_data
             }
-        except Exception as ex:
-            print(f"{ex}")
+        except Exception as retry_ex:
+            print(f"Retry attempt failed for {game_key}: {retry_ex}")
+            # Return an empty dict or handle it as necessary when retry fails
+            return {game_key: None}
 
     return data
 
@@ -75,7 +61,7 @@ def get_round_data(match_data, round, year):
     print(f"Collecting detailed data for round: {round}")
     try:
         # Extract data for the current round
-        round_data = match_data[year][f'Round {round}']
+        basic_round_data = match_data[year][f'Round {round}']
 
         # Function to process each game
         def process_game(game):
@@ -83,24 +69,23 @@ def get_round_data(match_data, round, year):
         
         # Use ThreadPoolExecutor with a max of 3 threads
         with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
-            round_data_scores = list(executor.map(process_game, round_data))
+            round_data_scores = list(executor.map(process_game, basic_round_data))
 
-        round_data.append({round: round_data_scores})
+        detailed_round_data = {round: round_data_scores}
+        return detailed_round_data
 
     except Exception as ex:
-        print(ex)
-
-    return round_data
+        print(f"Error getting round: {round}: {ex}")
+        return {round: []}
 
 def get_year_data(nrl_data, year):
     print(f"Getting data for year: {year}")
     year_data = []
-    round_data = get_round_data(nrl_data, 24, year)
 
-    # for round in range(1, select_round):
-    #     get_round_data(nrl_data, round, year)
+    for round in range(1, select_round):
+        round_data = get_round_data(nrl_data, round, year)
+        year_data.append(round_data)
 
-    year_data.append(round_data)
     return year_data
 
 def save_data(data):
@@ -111,7 +96,7 @@ def save_data(data):
     with open(f"../data/nrl_detailed_match_data_all.json", "w") as file:
         file.write(overall_data_json)
 
-def main():
+def scrape():
     print("Loading Data")
     nrl_data = get_basic_data()
     all_years_data = {}
@@ -121,4 +106,4 @@ def main():
     print("Saving Data")
     save_data(all_years_data)
 
-main()
+scrape()

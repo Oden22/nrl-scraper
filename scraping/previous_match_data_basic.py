@@ -9,7 +9,7 @@ import json
 years = [2022, 2023, 2024]
 rounds = range(1, 27)
 
-if __name__ == "__main__":
+def scrape():
     year_json = get_nrl_data(rounds, years)
     overall_data = {
         "NRL": year_json
