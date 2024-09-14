@@ -6,10 +6,7 @@
 from get_nrl_data import get_nrl_data
 import json
 
-years = [2022, 2023, 2024]
-rounds = range(1, 27)
-
-def scrape():
+def scrape(years=[2022, 2023, 2024], rounds=range(1, 27)):
     year_json = get_nrl_data(rounds, years)
     overall_data = {
         "NRL": year_json

@@ -13,9 +13,6 @@ variables = [
     "Round"
 ]
 
-select_round = 28
-years = ["2022", "2023" ,"2024"]
-
 def get_basic_data():
     with open(f"../data/nrl_data_all_years.json", 'r') as file:
         data = json.load(file)
@@ -78,11 +75,11 @@ def get_round_data(match_data, round, year):
         print(f"Error getting round: {round}: {ex}")
         return {round: []}
 
-def get_year_data(nrl_data, year):
+def get_year_data(nrl_data, year, rounds):
     print(f"Getting data for year: {year}")
     year_data = []
 
-    for round in range(1, select_round):
+    for round in rounds:
         round_data = get_round_data(nrl_data, round, year)
         year_data.append(round_data)
 
@@ -96,12 +93,12 @@ def save_data(data):
     with open(f"../data/nrl_detailed_match_data_all.json", "w") as file:
         file.write(overall_data_json)
 
-def scrape():
+def scrape(years=["2022", "2023" ,"2024"], rounds=range(1, 27)):
     print("Loading Data")
     nrl_data = get_basic_data()
     all_years_data = {}
     for year in years:
-        all_years_data[year] = get_year_data(nrl_data, year)
+        all_years_data[year] = get_year_data(nrl_data, year, rounds)
     
     print("Saving Data")
     save_data(all_years_data)
